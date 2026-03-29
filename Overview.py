@@ -1,12 +1,12 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="IS-AM-ARE | ML & Neural Network Project",
-    page_icon="🤖",
+    page_title="give me a break",
+    page_icon="😔",
     layout="wide",
 )
 
-st.title("🤖 Machine Learning & Neural Network Web Application")
+st.title("Machine Learning & Neural Network Web Application")
 st.markdown("### Intelligent Systems Project — IS-AM-ARE")
 
 st.markdown("---")
@@ -16,7 +16,7 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown(
         """
-        ## 📊 Datasets Used
+        ## Datasets Used
 
         ### 1. Titanic Survival Dataset
         - **Source:** Built-in Seaborn / open-source (Kaggle / OpenML)
@@ -39,14 +39,14 @@ with col1:
 with col2:
     st.markdown(
         """
-        ## 🤖 Models Developed
+        ## Models Developed
 
         ### Model 1 — Ensemble ML (Voting Classifier)
         Composed of **4 base estimators**:
-        1. 🌲 **Random Forest** — Bagging ensemble of decision trees
-        2. 📈 **Gradient Boosting** — Sequential boosting ensemble
-        3. 📐 **Logistic Regression** — Linear probabilistic model
-        4. 🔵 **Support Vector Classifier (SVC)** — Margin-based classifier
+        1. **Random Forest** — Bagging ensemble of decision trees
+        2. **Gradient Boosting** — Sequential boosting ensemble
+        3. **Logistic Regression** — Linear probabilistic model
+        4. **Support Vector Classifier (SVC)** — Margin-based classifier
 
         Combined using **Soft Voting** (average predicted probabilities).  
         Trained on the **Titanic dataset**.
@@ -70,16 +70,16 @@ st.markdown("---")
 
 st.markdown(
     """
-    ## 📑 Navigation
+    ## Navigation
 
     Use the **sidebar** to navigate between pages:
 
     | Page | Description |
     |------|-------------|
-    | 🧾 **ML Model Info** | Algorithm theory, data preparation steps, and references for the Ensemble ML model |
-    | 🧾 **NN Model Info** | Algorithm theory, data preparation steps, and references for the Neural Network |
-    | 🎯 **ML Model Demo** | Interactive demo — enter passenger details to predict Titanic survival |
-    | 🔮 **NN Model Demo** | Interactive demo — enter flower measurements to predict Iris species |
+    | **ML Model Info** | Algorithm theory, data preparation steps, and references for the Ensemble ML model |
+    | **NN Model Info** | Algorithm theory, data preparation steps, and references for the Neural Network |
+    | **ML Model Demo** | Interactive demo — enter passenger details to predict Titanic survival |
+    | **NN Model Demo** | Interactive demo — enter flower measurements to predict Iris species |
     """
 )
 
