@@ -7,9 +7,9 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.nn_model import get_nn_model, predict_species, SPECIES_NAMES
 
-st.set_page_config(page_title="NN Model Demo", page_icon="🔮", layout="wide")
+st.set_page_config(page_title="NN Model Demo", layout="wide")
 
-st.title("🔮 Neural Network Model — Iris Species Demo")
+st.title("Neural Network Model — Iris Species Demo")
 st.markdown(
     "Enter flower measurements below to classify the Iris species using the trained MLP Neural Network."
 )
@@ -19,7 +19,7 @@ st.markdown("---")
 with st.spinner("Loading model…"):
     mlp, scaler, le, accuracy, report, cm = get_nn_model()
 
-st.success(f"✅ Model loaded — Test Accuracy: **{accuracy:.1%}**")
+st.success(f"Model loaded — Test Accuracy: **{accuracy:.1%}**")
 
 st.markdown("---")
 
@@ -30,24 +30,43 @@ SPECIES_DEFAULTS = {
     "Iris virginica": (6.5, 3.0, 5.5, 1.8),
 }
 
+DEFAULT_SPECIES = "Iris setosa"
+
+
+def apply_preset(species: str) -> None:
+    sl, sw, pl, pw = SPECIES_DEFAULTS[species]
+    st.session_state["sepal_length"] = sl
+    st.session_state["sepal_width"] = sw
+    st.session_state["petal_length"] = pl
+    st.session_state["petal_width"] = pw
+
+
+if "sepal_length" not in st.session_state:
+    apply_preset(DEFAULT_SPECIES)
+
 st.subheader("Quick Fill (example values)")
 quick_col1, quick_col2, quick_col3, _ = st.columns([1, 1, 1, 1])
-preset = None
 with quick_col1:
-    if st.button("🌸 Setosa example", use_container_width=True):
-        preset = "Iris setosa"
+    st.button(
+        "Setosa example",
+        use_container_width=True,
+        on_click=apply_preset,
+        args=("Iris setosa",),
+    )
 with quick_col2:
-    if st.button("🌼 Versicolor example", use_container_width=True):
-        preset = "Iris versicolor"
+    st.button(
+        "Versicolor example",
+        use_container_width=True,
+        on_click=apply_preset,
+        args=("Iris versicolor",),
+    )
 with quick_col3:
-    if st.button("🌺 Virginica example", use_container_width=True):
-        preset = "Iris virginica"
-
-# Determine default slider values
-if preset:
-    sl_def, sw_def, pl_def, pw_def = SPECIES_DEFAULTS[preset]
-else:
-    sl_def, sw_def, pl_def, pw_def = 5.1, 3.5, 1.4, 0.2
+    st.button(
+        "Virginica example",
+        use_container_width=True,
+        on_click=apply_preset,
+        args=("Iris virginica",),
+    )
 
 st.markdown("---")
 
@@ -58,24 +77,40 @@ col1, col2 = st.columns(2)
 
 with col1:
     sepal_length = st.slider(
-        "Sepal Length (cm)", min_value=4.0, max_value=8.0, value=sl_def, step=0.1
+        "Sepal Length (cm)",
+        min_value=4.0,
+        max_value=8.0,
+        step=0.1,
+        key="sepal_length",
     )
     sepal_width = st.slider(
-        "Sepal Width (cm)", min_value=2.0, max_value=5.0, value=sw_def, step=0.1
+        "Sepal Width (cm)",
+        min_value=2.0,
+        max_value=5.0,
+        step=0.1,
+        key="sepal_width",
     )
 
 with col2:
     petal_length = st.slider(
-        "Petal Length (cm)", min_value=1.0, max_value=7.0, value=pl_def, step=0.1
+        "Petal Length (cm)",
+        min_value=1.0,
+        max_value=7.0,
+        step=0.1,
+        key="petal_length",
     )
     petal_width = st.slider(
-        "Petal Width (cm)", min_value=0.1, max_value=3.0, value=pw_def, step=0.1
+        "Petal Width (cm)",
+        min_value=0.1,
+        max_value=3.0,
+        step=0.1,
+        key="petal_width",
     )
 
 st.markdown("---")
 
 # ── Prediction ──────────────────────────────────────────────────────────────
-if st.button("🔮 Classify Species", type="primary", use_container_width=True):
+if st.button("Classify Species", type="primary", use_container_width=True):
     pred_idx, species_name, probability = predict_species(
         mlp, scaler, sepal_length, sepal_width, petal_length, petal_width
     )
@@ -83,16 +118,12 @@ if st.button("🔮 Classify Species", type="primary", use_container_width=True):
     st.markdown("### Prediction Result")
     col_res, col_bar = st.columns([1, 2])
 
-    species_emoji = {"setosa": "🌸", "versicolor": "🌼", "virginica": "🌺"}
-
     with col_res:
-        emoji = species_emoji.get(species_name, "🌷")
-        st.success(f"### {emoji} Iris *{species_name}*")
+        st.success(f"### Iris {species_name}")
 
         st.markdown("**Confidence per class:**")
         for i, (sp, prob) in enumerate(zip(SPECIES_NAMES, probability)):
-            e = species_emoji.get(sp, "🌷")
-            st.progress(prob, text=f"{e} {sp}: {prob:.1%}")
+            st.progress(prob, text=f"{sp}: {prob:.1%}")
 
         feature_summary = pd.DataFrame(
             {

@@ -8,9 +8,9 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.nn_model import load_iris_data, preprocess_iris, get_nn_model, SPECIES_NAMES
 
-st.set_page_config(page_title="NN Model Info", page_icon="🧠", layout="wide")
+st.set_page_config(page_title="NN Model Info", layout="wide")
 
-st.title("🧠 Neural Network Model")
+st.title("Neural Network Model")
 st.markdown("### Iris Species Classification — Model Description")
 st.markdown("---")
 

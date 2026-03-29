@@ -7,9 +7,9 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.ml_model import get_ml_model, predict_survival
 
-st.set_page_config(page_title="ML Model Demo", page_icon="🎯", layout="wide")
+st.set_page_config(page_title="ML Model Demo", layout="wide")
 
-st.title("🎯 Ensemble ML Model — Titanic Survival Demo")
+st.title("Ensemble ML Model — Titanic Survival Demo")
 st.markdown(
     "Enter passenger details below to predict the probability of survival using the trained Voting Classifier."
 )
@@ -19,7 +19,7 @@ st.markdown("---")
 with st.spinner("Loading model…"):
     ensemble, scaler, accuracy, report, cm = get_ml_model()
 
-st.success(f"✅ Model loaded — Test Accuracy: **{accuracy:.1%}**")
+st.success(f"Model loaded — Test Accuracy: **{accuracy:.1%}**")
 
 st.markdown("---")
 
@@ -73,7 +73,7 @@ with col3:
 st.markdown("---")
 
 # ── Prediction ──────────────────────────────────────────────────────────────
-if st.button("🔮 Predict Survival", type="primary", use_container_width=True):
+if st.button("Predict Survival", type="primary", use_container_width=True):
     prediction, probability = predict_survival(
         ensemble, scaler, pclass, sex, age, sibsp, parch, fare, embarked
     )
@@ -83,9 +83,9 @@ if st.button("🔮 Predict Survival", type="primary", use_container_width=True):
 
     with col_res:
         if prediction == 1:
-            st.success("### ✅ Survived")
+            st.success("### Survived 😭")
         else:
-            st.error("### ❌ Did Not Survive")
+            st.error("### Did Not Survive 🤣")
 
         st.metric("Survival Probability", f"{probability[1]:.1%}")
         st.metric("Non-Survival Probability", f"{probability[0]:.1%}")

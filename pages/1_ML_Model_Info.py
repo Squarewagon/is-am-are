@@ -8,9 +8,9 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.ml_model import load_titanic_data, preprocess_titanic, get_ml_model
 
-st.set_page_config(page_title="ML Model Info", page_icon="🧾", layout="wide")
+st.set_page_config(page_title="ML Model Info", layout="wide")
 
-st.title("🧾 Ensemble Machine Learning Model")
+st.title("Ensemble Machine Learning Model")
 st.markdown("### Titanic Survival Prediction — Model Description")
 st.markdown("---")
 
